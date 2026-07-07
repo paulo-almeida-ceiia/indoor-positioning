@@ -1,8 +1,8 @@
-from sqlalchemy import String, DateTime, ForeignKey
+from sqlalchemy import String, Float, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 
-from .database import Base
+from app.db.database import Base
 
 
 class Anchor(Base):
@@ -10,10 +10,10 @@ class Anchor(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
-    x: Mapped[float]
-    y: Mapped[float]
-    z: Mapped[float]
-    status: Mapped[str] = mapped_column(String(20))
+    x: Mapped[float] = mapped_column(Float)
+    y: Mapped[float] = mapped_column(Float)
+    z: Mapped[float] = mapped_column(Float)
+    online: Mapped[bool] = mapped_column(Boolean, default=True)
 
 
 class Tag(Base):
@@ -21,20 +21,15 @@ class Tag(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
-    asset_name: Mapped[str] = mapped_column(String(100))
-    status: Mapped[str] = mapped_column(String(20))
-    battery: Mapped[int]
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
 
 
 class Position(Base):
     __tablename__ = "positions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-
     tag_id: Mapped[int] = mapped_column(ForeignKey("tags.id"))
-
-    x: Mapped[float]
-    y: Mapped[float]
-    z: Mapped[float]
-
+    x: Mapped[float] = mapped_column(Float)
+    y: Mapped[float] = mapped_column(Float)
+    z: Mapped[float] = mapped_column(Float)
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

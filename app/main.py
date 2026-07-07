@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 
 from app.db.database import engine, Base
+from app.db import models
+
+print("Registered tables:", Base.metadata.tables.keys())
 
 Base.metadata.create_all(bind=engine)
 
