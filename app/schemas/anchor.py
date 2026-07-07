@@ -1,27 +1,27 @@
-from datetime import datetime
-
 from pydantic import BaseModel, ConfigDict
 
 
-class PositionBase(BaseModel):
-    tag_id: int
+class AnchorBase(BaseModel):
+    name: str
     x: float
     y: float
     z: float
+    online: bool = True
 
 
-class PositionCreate(PositionBase):
+class AnchorCreate(AnchorBase):
     pass
 
 
-class PositionUpdate(BaseModel):
+class AnchorUpdate(BaseModel):
+    name: str | None = None
     x: float | None = None
     y: float | None = None
     z: float | None = None
+    online: bool | None = None
 
 
-class PositionResponse(PositionBase):
+class AnchorResponse(AnchorBase):
     id: int
-    timestamp: datetime
 
     model_config = ConfigDict(from_attributes=True)
